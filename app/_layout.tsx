@@ -10,6 +10,7 @@ import Inventory from '@/src/components/Inventory/Inventory';
 import Dashboard from '@/src/components/Dashboard';
 import CustomSafeAreaView from '@/src/components/CustomSafeAreaView';
 import AuthPage from '@/src/components/auth/Auth';
+import App from './app';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -40,6 +41,6 @@ export default function RootLayout() {
 		// <CustomSafeAreaView>
 		// 	<Dashboard />
 		// </CustomSafeAreaView>
-		<AuthPage />
+		<App />
 	);
 }

@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { TextInput, Button, Avatar, IconButton } from 'react-native-paper';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { signup } from '../redux/actions/authActions';
-// import { RootState } from '../redux/store';
+import { useAppDispatch, useAppSelector } from '@/src/redux/App/hooks';
+import { signUpFucntion } from '@/src/redux/features/authState/authSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Loader from '../Loader';
 
 const AuthPage = () => {
-	// const dispatch = useDispatch();
-	// const authState = useSelector((state: RootState) => state.auth);
-
+	const dispatch = useAppDispatch();
+	const authState = useAppSelector((state) => state.auth);
 	const [isLogin, setIsLogin] = useState(true);
 	const [login, setLogin] = useState('');
 	const [password, setPassword] = useState('');
@@ -24,9 +24,10 @@ const AuthPage = () => {
 			setError('Passwords do not match');
 		} else {
 			setError('');
-			// dispatch(signup({ email: login, password, confirmPassword }));
+			dispatch(signUpFucntion({ email: login, password: confirmPassword }));
 		}
 	};
+
 	const handleForgotPassword = () => {
 		alert('Forgot Password Clicked!');
 		// Implement forgot password logic here
@@ -34,10 +35,9 @@ const AuthPage = () => {
 
 	return (
 		<View style={styles.container}>
-			<Avatar.Icon size={64} icon='account' style={styles.icon} />
+			<Avatar.Icon size={94} icon='account' style={styles.icon} />
 
 			{isLogin ? (
-				// Login Form
 				<>
 					<TextInput label='Login' value={login} onChangeText={(text) => setLogin(text)} style={styles.input} mode='outlined' />
 					<View style={styles.passwordContainer}>
@@ -59,7 +59,6 @@ const AuthPage = () => {
 					</Text>
 				</>
 			) : (
-				// Signup Form
 				<>
 					<TextInput label='Email' value={login} onChangeText={(text) => setLogin(text)} style={styles.input} mode='outlined' />
 					<View style={styles.passwordContainer}>
@@ -70,7 +69,7 @@ const AuthPage = () => {
 						<TextInput label='Confirm Password' value={confirmPassword} onChangeText={(text) => setConfirmPassword(text)} style={[styles.input, { flex: 1 }]} secureTextEntry={!showConfirmPassword} mode='outlined' />
 						<IconButton icon={showConfirmPassword ? 'eye-off' : 'eye'} size={20} onPress={() => setShowConfirmPassword(!showConfirmPassword)} style={styles.eyeIcon} />
 					</View>
-					{/* {authState.error ? <Text style={styles.error}>{authState.error}</Text> : null} */}
+					{authState.error ? <Text style={styles.error}>Got some internal error</Text> : null}
 					<Button mode='contained' style={styles.loginButton} onPress={handleSignup}>
 						SIGN UP
 					</Button>
@@ -83,7 +82,7 @@ const AuthPage = () => {
 				</>
 			)}
 
-			{/* {authState.loading && <Text>Loading...</Text>} */}
+			{authState.loading && <Loader />}
 		</View>
 	);
 };
