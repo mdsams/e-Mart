@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { TextInput, Button, Avatar, IconButton } from 'react-native-paper';
 import { useAppDispatch, useAppSelector } from '@/src/redux/App/hooks';
-import { signUpFucntion } from '@/src/redux/features/authState/authSlice';
+import { signUpFucntion, signInFucntion } from '@/src/redux/features/authState/authSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Loader from '../Loader';
 
@@ -28,6 +28,15 @@ const AuthPage = () => {
 		}
 	};
 
+	const handleSignIn = () => {
+		if (login === '' || password === '') {
+			setError('Please fill in all fields');
+		} else {
+			setError('');
+			dispatch(signInFucntion({ email: login, password: password }));
+		}
+	};
+
 	const handleForgotPassword = () => {
 		alert('Forgot Password Clicked!');
 		// Implement forgot password logic here
@@ -45,7 +54,7 @@ const AuthPage = () => {
 						<IconButton icon={showPassword ? 'eye-off' : 'eye'} size={20} onPress={() => setShowPassword(!showPassword)} style={styles.eyeIcon} />
 					</View>
 					{error ? <Text style={styles.error}>{error}</Text> : null}
-					<Button mode='contained' style={styles.loginButton} onPress={() => alert('Login')}>
+					<Button mode='contained' style={styles.loginButton} onPress={handleSignIn}>
 						LOG IN
 					</Button>
 					<TouchableOpacity onPress={handleForgotPassword}>

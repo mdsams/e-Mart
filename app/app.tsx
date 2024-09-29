@@ -5,19 +5,25 @@ import { PersistGate } from 'redux-persist/integration/react';
 import store from '@/src/redux/App/store';
 import { persistor } from '@/src/redux/App/store';
 import AuthPage from '@/src/components/auth/Auth';
+import { useAppSelector } from '@/src/redux/App/hooks';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Dashboard from '@/src/components/Dashboard';
+import CustomSafeAreaView from '@/src/components/CustomSafeAreaView';
+
+const AppPage = () => {
+	return (
+		<CustomSafeAreaView>
+			<Dashboard />
+		</CustomSafeAreaView>
+	);
+};
 
 const App = () => {
 	const isDarkMode = useColorScheme() === 'dark';
 
-	return (
-		<>
-			<Provider store={store}>
-				<PersistGate loading={null} persistor={persistor}>
-					<AuthPage />
-				</PersistGate>
-			</Provider>
-		</>
-	);
+	const authToken = useAppSelector((state) => state.auth.userToken);
+
+	return <>{!authToken ? <AuthPage /> : <AppPage />}</>;
 };
 
 export default App;

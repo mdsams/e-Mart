@@ -6,10 +6,9 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/src/hooks/useColorScheme';
-import Inventory from '@/src/components/Inventory/Inventory';
-import Dashboard from '@/src/components/Dashboard';
-import CustomSafeAreaView from '@/src/components/CustomSafeAreaView';
-import AuthPage from '@/src/components/auth/Auth';
+import { Provider } from 'react-redux';
+import store, { persistor } from '@/src/redux/App/store';
+import { PersistGate } from 'redux-persist/integration/react';
 import App from './app';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -32,15 +31,16 @@ export default function RootLayout() {
 	}
 
 	return (
-		// <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-		// 	<Stack>
-		// 		<Stack.Screen name='(tabs)' options={{ headerShown: false }} />
-		// 		<Stack.Screen name='+not-found' />
-		// 	</Stack>
-		// </ThemeProvider>
-		// <CustomSafeAreaView>
-		// 	<Dashboard />
-		// </CustomSafeAreaView>
-		<App />
+		<ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+			<Provider store={store}>
+				<PersistGate loading={null} persistor={persistor}>
+					{/* <Stack>
+						<Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+						<Stack.Screen name='+not-found' />
+					</Stack> */}
+					<App />
+				</PersistGate>
+			</Provider>
+		</ThemeProvider>
 	);
 }

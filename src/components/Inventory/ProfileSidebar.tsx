@@ -1,14 +1,19 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { Drawer } from 'react-native-paper';
-
+import { logout } from '@/src/redux/features/authState/authSlice';
+import { useAppDispatch } from '@/src/redux/App/hooks';
 interface ProfileSidebarProps {
 	isOpen: boolean;
 	closeDropdown: () => void;
 }
 
 const ProfileSidebar: React.FC<ProfileSidebarProps> = ({ isOpen, closeDropdown }) => {
-	if (!isOpen) return null; // Return null if dropdown is not open
+	const dispatch = useAppDispatch();
+	if (!isOpen) return null;
+
+	function logOut() {
+		dispatch(logout());
+	}
 
 	return (
 		<View style={styles.dropdown}>
@@ -16,7 +21,12 @@ const ProfileSidebar: React.FC<ProfileSidebarProps> = ({ isOpen, closeDropdown }
 				{/* <Drawer.Item style={{ backgroundColor: '#64ffda' }} label='First Item' /> */}
 				<Text style={styles.item}>Profile</Text>
 			</TouchableOpacity>
-			<TouchableOpacity onPress={closeDropdown}>
+			<TouchableOpacity
+				onPress={() => {
+					closeDropdown;
+					logOut();
+				}}
+			>
 				<Text style={styles.item}>Logout</Text>
 			</TouchableOpacity>
 		</View>

@@ -7,7 +7,7 @@ import Inventory from './Inventory/Inventory';
 import Header from './Inventory/Header';
 
 const Dashboard = () => {
-	const [isSidebarOpen, setSidebarOpen] = useState(true);
+	const [isSidebarOpen, setSidebarOpen] = useState(false);
 	const toggleSidebar = () => {
 		setSidebarOpen((prev) => !prev);
 	};
