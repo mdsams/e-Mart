@@ -1,0 +1,13 @@
+{
+  "users": [
+    {
+      "id": 1727603448894,
+      "username": "abcdef@gmail.com",
+      "password": "$2a$10$Ol/9blT3aOZamGU3lU/g7O1brWF/PbNsfDJtPAtmvY1NGEhwUsLO2"
+    }
+  ],
+  "tokens": [
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcyNzYwMzQ0ODg5NCwidXNlcm5hbWUiOiJhYmNkZWZAZ21haWwuY29tIiwiaWF0IjoxNzI3NjAzNDQ4LCJleHAiOjE3Mjc2Mzk0NDh9.y7rJ0FIExeLPQNtJiTYcsxHZnhvrLxjGT_hGJw286FU",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcyNzYwMzQ0ODg5NCwidXNlcm5hbWUiOiJhYmNkZWZAZ21haWwuY29tIiwiaWF0IjoxNzI3NjAzNDc2LCJleHAiOjE3Mjc2Mzk0NzZ9.pysaNv_1JIGPQpErIej1koo-G3ezgv6MqcSCdn6S5Kg"
+  ]
+}
