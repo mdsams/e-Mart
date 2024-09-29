@@ -6,6 +6,9 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/src/hooks/useColorScheme';
+import Inventory from '@/src/components/Inventory/Inventory';
+import Dashboard from '@/src/components/Dashboard';
+import CustomSafeAreaView from '@/src/components/CustomSafeAreaView';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -27,11 +30,14 @@ export default function RootLayout() {
 	}
 
 	return (
-		<ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-			<Stack>
-				<Stack.Screen name='(tabs)' options={{ headerShown: false }} />
-				<Stack.Screen name='+not-found' />
-			</Stack>
-		</ThemeProvider>
+		// <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+		// 	<Stack>
+		// 		<Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+		// 		<Stack.Screen name='+not-found' />
+		// 	</Stack>
+		// </ThemeProvider>
+		<CustomSafeAreaView>
+			<Dashboard />
+		</CustomSafeAreaView>
 	);
 }
