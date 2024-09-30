@@ -14,8 +14,8 @@ import ExcelSheet from '@/src/components/Inventory/Sheet';
 const AppPage = () => {
 	return (
 		<CustomSafeAreaView>
-			{/* <Dashboard /> */}
-			<ExcelSheet />
+			<Dashboard />
+			{/* <ExcelSheet /> */}
 		</CustomSafeAreaView>
 	);
 };

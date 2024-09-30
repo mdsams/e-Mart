@@ -51,7 +51,7 @@ const Inventory = () => {
 };
 
 const styles = StyleSheet.create({
-	container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
+	container: { padding: 16, paddingTop: 30, backgroundColor: '#fff', zIndex: -1 },
 	head: { height: 40, backgroundColor: '#f1f8ff' },
 	text: { textAlign: 'center', fontWeight: 'bold' }, // Make sure this is always an object, not an array
 	dataWrapper: { marginTop: -1 },

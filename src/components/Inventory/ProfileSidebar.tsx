@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Platform } from 'react-native';
 import { logout } from '@/src/redux/features/authState/authSlice';
 import { useAppDispatch } from '@/src/redux/App/hooks';
 interface ProfileSidebarProps {
@@ -8,6 +8,7 @@ interface ProfileSidebarProps {
 }
 
 const ProfileSidebar: React.FC<ProfileSidebarProps> = ({ isOpen, closeDropdown }) => {
+	const ios = Platform.OS === 'ios';
 	const dispatch = useAppDispatch();
 	if (!isOpen) return null;
 
@@ -16,7 +17,7 @@ const ProfileSidebar: React.FC<ProfileSidebarProps> = ({ isOpen, closeDropdown }
 	}
 
 	return (
-		<View style={styles.dropdown}>
+		<View style={ios ? styles.dropdownIos : styles.dropdown}>
 			<TouchableOpacity onPress={closeDropdown}>
 				{/* <Drawer.Item style={{ backgroundColor: '#64ffda' }} label='First Item' /> */}
 				<Text style={styles.item}>Profile</Text>
@@ -34,6 +35,23 @@ const ProfileSidebar: React.FC<ProfileSidebarProps> = ({ isOpen, closeDropdown }
 };
 
 const styles = StyleSheet.create({
+	dropdownIos: {
+		position: 'absolute',
+		top: 50,
+		right: 2,
+		backgroundColor: '#d0dff5',
+		borderWidth: 1,
+		borderColor: '#ddd',
+		borderRadius: 5,
+		shadowColor: '#000',
+		shadowOpacity: 0.3,
+		shadowOffset: { width: 0, height: 2 },
+		shadowRadius: 4,
+		zIndex: 1,
+		width: 150,
+		paddingVertical: 10,
+		height: 120,
+	},
 	dropdown: {
 		position: 'absolute',
 		top: 50,

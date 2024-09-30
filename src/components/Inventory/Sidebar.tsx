@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Platform } from 'react-native';
 import { Drawer } from 'react-native-paper';
 
 const Sidebar = ({ isOpen }: { isOpen: boolean }) => {
+	const ios = Platform.OS === 'ios';
 	return (
-		<View style={isOpen ? styles.sidebar : styles.collapsedSidebar}>
+		<View style={isOpen ? (ios ? styles.sidebarIos : styles.sidebar) : styles.collapsedSidebar}>
 			{isOpen && (
 				<View style={styles.menu}>
 					{/* <Drawer.Item style={styles.menuItem} icon='star' label='First Item' /> */}
@@ -18,19 +19,32 @@ const Sidebar = ({ isOpen }: { isOpen: boolean }) => {
 };
 
 const styles = StyleSheet.create({
+	sidebarIos: {
+		backgroundColor: '#d0dff5',
+		justifyContent: 'center',
+		padding: 10,
+		height: '100%',
+		width: '50%',
+		position: 'absolute',
+		marginTop: 100,
+		top: 1,
+		zIndex: 100,
+	},
 	sidebar: {
 		backgroundColor: '#d0dff5',
 		justifyContent: 'center',
 		padding: 10,
 		height: '100%',
 		width: '50%',
+		position: 'absolute',
+		marginTop: 100,
 	},
 	collapsedSidebar: {
 		width: 0,
 		overflow: 'hidden',
 	},
 	menu: {
-		marginTop: 20,
+		position: 'relative',
 	},
 	menuItem: {
 		fontSize: 16,

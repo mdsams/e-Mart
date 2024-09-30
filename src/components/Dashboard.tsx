@@ -16,7 +16,7 @@ const Dashboard = () => {
 		<>
 			<Header isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
 			<Sidebar isOpen={isSidebarOpen} />
-			<View style={styles.main}>
+			<View>
 				<MainContent />
 			</View>
 		</>
@@ -28,11 +28,6 @@ export default Dashboard;
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		zIndex: 1, // Ensure container has a low zIndex to not overlap modal
-	},
-	main: {
-		// backgroundColor: 'black',
-		// flex: 1,
-		zIndex: 1000,
+		zIndex: 1,
 	},
 });
