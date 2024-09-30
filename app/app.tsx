@@ -9,11 +9,13 @@ import { useAppSelector } from '@/src/redux/App/hooks';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Dashboard from '@/src/components/Dashboard';
 import CustomSafeAreaView from '@/src/components/CustomSafeAreaView';
+import ExcelSheet from '@/src/components/Inventory/Sheet';
 
 const AppPage = () => {
 	return (
 		<CustomSafeAreaView>
-			<Dashboard />
+			{/* <Dashboard /> */}
+			<ExcelSheet />
 		</CustomSafeAreaView>
 	);
 };
@@ -23,7 +25,8 @@ const App = () => {
 
 	const authToken = useAppSelector((state) => state.auth.userToken);
 
-	return <>{!authToken ? <AuthPage /> : <AppPage />}</>;
+	// return <>{!authToken ? <AuthPage /> : <AppPage />}</>;
+	return <AppPage />;
 };
 
 export default App;
