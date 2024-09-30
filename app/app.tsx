@@ -15,7 +15,6 @@ const AppPage = () => {
 	return (
 		<CustomSafeAreaView>
 			<Dashboard />
-			{/* <ExcelSheet /> */}
 		</CustomSafeAreaView>
 	);
 };
@@ -25,8 +24,8 @@ const App = () => {
 
 	const authToken = useAppSelector((state) => state.auth.userToken);
 
-	// return <>{!authToken ? <AuthPage /> : <AppPage />}</>;
-	return <AppPage />;
+	return <>{!authToken ? <AuthPage /> : <AppPage />}</>;
+	// return <AppPage />;
 };
 
 export default App;

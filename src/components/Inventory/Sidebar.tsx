@@ -28,23 +28,25 @@ const styles = StyleSheet.create({
 		position: 'absolute',
 		marginTop: 100,
 		top: 1,
-		zIndex: 100,
+		zIndex: 1,
 	},
 	sidebar: {
 		backgroundColor: '#d0dff5',
+		// backgroundColor: 'black',
 		justifyContent: 'center',
 		padding: 10,
 		height: '100%',
 		width: '50%',
 		position: 'absolute',
 		marginTop: 100,
+		zIndex: 1000,
 	},
 	collapsedSidebar: {
 		width: 0,
 		overflow: 'hidden',
 	},
 	menu: {
-		position: 'relative',
+		// position: 'relative',
 	},
 	menuItem: {
 		fontSize: 16,

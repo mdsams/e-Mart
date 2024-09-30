@@ -89,11 +89,10 @@ const ExcelSheet: React.FC = () => {
 	};
 
 	return (
-		<ScrollView>
+		<ScrollView style={{ height: '95%' }}>
 			<View style={styles.container}>
 				<Button title='Upload Excel Sheet' onPress={uploadExcelSheet} />
 				{fileName && <Text style={styles.fileName}>Uploaded File: {fileName}</Text>}
-
 				<View style={styles.tableContainer}>
 					<Table borderStyle={{ borderWidth: 1, borderColor: '#ccc' }}>
 						<Rows data={tableData} />
@@ -141,6 +140,7 @@ const ExcelSheet: React.FC = () => {
 const styles = StyleSheet.create({
 	container: {
 		padding: 16,
+		height: '100%',
 	},
 	fileName: {
 		marginVertical: 10,
@@ -154,6 +154,8 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		marginTop: 10,
+		justifyContent: 'center',
+		alignSelf: 'center',
 	},
 	addButtonText: {
 		marginLeft: 5,

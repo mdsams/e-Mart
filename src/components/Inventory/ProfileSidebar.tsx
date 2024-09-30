@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Platform } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, Platform } from 'react-native';
 import { logout } from '@/src/redux/features/authState/authSlice';
 import { useAppDispatch } from '@/src/redux/App/hooks';
+
 interface ProfileSidebarProps {
 	isOpen: boolean;
 	closeDropdown: () => void;
@@ -10,35 +11,49 @@ interface ProfileSidebarProps {
 const ProfileSidebar: React.FC<ProfileSidebarProps> = ({ isOpen, closeDropdown }) => {
 	const ios = Platform.OS === 'ios';
 	const dispatch = useAppDispatch();
-	if (!isOpen) return null;
 
 	function logOut() {
 		dispatch(logout());
 	}
 
 	return (
-		<View style={ios ? styles.dropdownIos : styles.dropdown}>
-			<TouchableOpacity onPress={closeDropdown}>
-				{/* <Drawer.Item style={{ backgroundColor: '#64ffda' }} label='First Item' /> */}
-				<Text style={styles.item}>Profile</Text>
-			</TouchableOpacity>
+		<Modal
+			visible={isOpen}
+			transparent={true} // Make the modal transparent
+			animationType='fade' // Optional: Animation for opening/closing
+		>
 			<TouchableOpacity
-				onPress={() => {
-					closeDropdown;
-					logOut();
-				}}
+				style={styles.modalOverlay}
+				onPress={closeDropdown} // Close when tapping outside
+				activeOpacity={1}
 			>
-				<Text style={styles.item}>Logout</Text>
+				<View style={ios ? styles.dropdownIos : styles.dropdown}>
+					<TouchableOpacity onPress={closeDropdown}>
+						<Text style={styles.item}>Profile</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						onPress={() => {
+							closeDropdown();
+							logOut();
+						}}
+					>
+						<Text style={styles.item}>Logout</Text>
+					</TouchableOpacity>
+				</View>
 			</TouchableOpacity>
-		</View>
+		</Modal>
 	);
 };
 
 const styles = StyleSheet.create({
+	modalOverlay: {
+		flex: 1,
+		justifyContent: 'flex-start',
+		alignItems: 'flex-end', // Align dropdown to the top-right
+		backgroundColor: 'rgba(0, 0, 0, 0.3)', // Optional: Dim background
+		paddingTop: 50, // Adjust based on the position of the dropdown
+	},
 	dropdownIos: {
-		position: 'absolute',
-		top: 50,
-		right: 2,
 		backgroundColor: '#d0dff5',
 		borderWidth: 1,
 		borderColor: '#ddd',
@@ -47,15 +62,11 @@ const styles = StyleSheet.create({
 		shadowOpacity: 0.3,
 		shadowOffset: { width: 0, height: 2 },
 		shadowRadius: 4,
-		zIndex: 1,
 		width: 150,
 		paddingVertical: 10,
 		height: 120,
 	},
 	dropdown: {
-		position: 'absolute',
-		top: 50,
-		right: 2,
 		backgroundColor: '#d0dff5',
 		borderWidth: 1,
 		borderColor: '#ddd',
@@ -64,9 +75,9 @@ const styles = StyleSheet.create({
 		shadowOpacity: 0.3,
 		shadowOffset: { width: 0, height: 2 },
 		shadowRadius: 4,
-		zIndex: 1000,
 		width: 150,
 		paddingVertical: 10,
+		height: 120,
 	},
 	item: {
 		paddingVertical: 15,
