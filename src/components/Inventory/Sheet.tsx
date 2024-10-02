@@ -3,26 +3,24 @@ import { View, Button, Text, TextInput, TouchableOpacity, Modal, ScrollView, Sty
 import * as DocumentPicker from 'expo-document-picker';
 import XLSX from 'xlsx';
 import { Table, Rows } from 'react-native-table-component';
-import { AntDesign } from '@expo/vector-icons'; // For the plus icon
+import { AntDesign } from '@expo/vector-icons';
+import { useAppDispatch, useAppSelector } from '@/src/redux/App/hooks';
+import { RootState } from '@/src/redux/App/store';
+import { setInventoryData, addInventoryRow, updateNewRow, resetNewRow } from '@/src/redux/features/authState/inventorySlice';
 
 type TableData = string[][];
 
 const ExcelSheet: React.FC = () => {
-	const [tableData, setTableData] = useState<TableData>([
-		['', '', ''],
-		['', '', ''],
-		['', '', ''],
-	]);
+	const dispatch = useAppDispatch();
+	const { newRow, tableData } = useAppSelector((state: RootState) => state.inventory);
 	const [fileName, setFileName] = useState<string | null>(null);
 	const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-	const [newRow, setNewRow] = useState<string[]>([]);
 
-	// Set newRow's length to match the number of columns in the first row of tableData
 	useEffect(() => {
 		if (tableData.length > 0) {
-			setNewRow(Array(tableData[0].length).fill(''));
+			dispatch(resetNewRow());
 		}
-	}, [tableData]);
+	}, [isModalVisible]);
 
 	// Function to handle file upload
 	const uploadExcelSheet = async () => {
@@ -52,7 +50,7 @@ const ExcelSheet: React.FC = () => {
 					const sheetName = workbook.SheetNames[0]; // Get the first sheet
 					const sheet = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 });
 
-					setTableData(sheet as TableData); // Set the parsed data into the table
+					dispatch(setInventoryData(sheet as TableData)); // Set the parsed data into the table
 				};
 
 				// Error handler for FileReader
@@ -72,10 +70,9 @@ const ExcelSheet: React.FC = () => {
 
 	// Function to add a new row to the table
 	const addNewRow = () => {
-		setTableData([...tableData, newRow]);
+		dispatch(addInventoryRow());
 		setIsModalVisible(false); // Close the modal
-		// Reset newRow based on tableData[0]'s length
-		setNewRow(Array(tableData[0].length).fill(''));
+		dispatch(resetNewRow()); // Reset newRow after adding the row
 	};
 
 	// Function to open the modal
@@ -118,9 +115,7 @@ const ExcelSheet: React.FC = () => {
 									placeholder={`Column ${index + 1}`}
 									value={value}
 									onChangeText={(text) => {
-										const updatedRow = [...newRow];
-										updatedRow[index] = text;
-										setNewRow(updatedRow);
+										dispatch(updateNewRow({ index, value: text }));
 									}}
 								/>
 							))}
@@ -140,7 +135,6 @@ const ExcelSheet: React.FC = () => {
 const styles = StyleSheet.create({
 	container: {
 		padding: 16,
-		height: '100%',
 	},
 	fileName: {
 		marginVertical: 10,
@@ -151,11 +145,10 @@ const styles = StyleSheet.create({
 		marginVertical: 10,
 	},
 	addButton: {
-		flexDirection: 'row',
-		alignItems: 'center',
-		marginTop: 10,
 		justifyContent: 'center',
-		alignSelf: 'center',
+		alignItems: 'center',
+		flexDirection: 'row',
+		marginTop: 10,
 	},
 	addButtonText: {
 		marginLeft: 5,

@@ -1,15 +1,10 @@
 import React from 'react';
 import { useColorScheme } from 'react-native';
-import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
-import store from '@/src/redux/App/store';
-import { persistor } from '@/src/redux/App/store';
 import AuthPage from '@/src/components/auth/Auth';
 import { useAppSelector } from '@/src/redux/App/hooks';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Dashboard from '@/src/components/Dashboard';
 import CustomSafeAreaView from '@/src/components/CustomSafeAreaView';
-import ExcelSheet from '@/src/components/Inventory/Sheet';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AppPage = () => {
 	return (
@@ -19,7 +14,30 @@ const AppPage = () => {
 	);
 };
 
+const clearAllKeysAndCheck = async () => {
+	try {
+		// Clear all items in AsyncStorage
+		// await AsyncStorage.clear();
+		// console.log('All keys cleared!');
+
+		// Check if anything is left (should be empty)
+		const keys = await AsyncStorage.getAllKeys();
+		console.log('=================================', keys);
+		if (keys.length === 0) {
+			console.log('AsyncStorage is empty.');
+		} else {
+			const stores = await AsyncStorage.multiGet(keys);
+			stores.forEach(([key, value]) => {
+				console.log(`Key: ${key}, Value: ${value}`);
+			});
+		}
+	} catch (error) {
+		console.error('Error clearing and checking AsyncStorage:', error);
+	}
+};
+
 const App = () => {
+	// clearAllKeysAndCheck();
 	const isDarkMode = useColorScheme() === 'dark';
 
 	const authToken = useAppSelector((state) => state.auth.userToken);
