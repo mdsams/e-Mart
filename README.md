@@ -23,3 +23,10 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
     cd ./server
    npm run start
 ```
+
+## change the IP address to connect with the JSON server
+go to
+```bash
+    cd ./src/services/Url.ts
+```
+change the Ip in the URL:- AuthAPI
